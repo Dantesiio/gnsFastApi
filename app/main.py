@@ -3,6 +3,7 @@ from fastapi import FastAPI
 
 # Usa importaciones relativas para resolver el paquete.
 from .api.users import router as users_router
+from .api.items import router as items_router
 
 # Creating the FastAPI instance is the entry point for the web application.
 app = FastAPI(
@@ -10,7 +11,9 @@ app = FastAPI(
     description="Simple endpoints to practice FastAPI fundamentals.",
     version="0.2.0",
 )
-
+@app.get("/")
+def hello_world():
+    return {"message": "Hello, World!"}
 
 @app.get("/health", tags=["health"])
 def health_check() -> dict[str, str]:
@@ -20,3 +23,4 @@ def health_check() -> dict[str, str]:
 
 # Routers help keep endpoints organized as the project grows.
 app.include_router(users_router, prefix="/api", tags=["users"])
+app.include_router(items_router, tags=["items"])  # rutas: /items, /items/{id}

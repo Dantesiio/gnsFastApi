@@ -98,6 +98,25 @@ Users API (nuevo)
 - `GET /api/users/{user_id}`: obtiene usuario por id.
 - `DELETE /api/users/{user_id}`: elimina usuario; devuelve 204.
 
+Items API (prueba técnica)
+--------------------------
+
+- `POST /items`: crea un ítem enviando `{ "name": str, "price": float }`. El precio debe ser mayor o igual a 0.
+- `GET /items`: devuelve la lista completa de ítems guardados en memoria.
+- `GET /items/{id}`: busca un ítem por su identificador y devuelve 404 si no existe.
+
+Ejemplo rápido con `curl`:
+
+```
+curl -X POST http://localhost:8000/items \
+	-H 'Content-Type: application/json' \
+	-d '{"name":"Cuaderno","price":12.5}'
+
+curl http://localhost:8000/items
+
+curl http://localhost:8000/items/1
+```
+
 Prueba rápida con curl (terminal):
 
 ```
