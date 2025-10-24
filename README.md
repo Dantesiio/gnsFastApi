@@ -2,6 +2,8 @@
 
 Mini API REST para practicar FastAPI durante la prueba técnica. Incluye endpoints de usuarios y los ítems solicitados en el enunciado.
 
+Se reutilizo la plantilla que pidieron en el correo que enviaron de preparacion, para la prueba solamente se usa items.py y 
+
 ## Requisitos
 
 - Python 3.12+
