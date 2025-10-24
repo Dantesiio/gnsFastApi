@@ -1,1 +1,153 @@
-Interview Practice FastApi, Python, Docker and GIT
+Interview Practice Template: Python • FastAPI • Git • Docker
+=========================================================
+
+This repository is a starter kit to rehearse the core topics listed in the interview preparation guide. Every folder demonstrates one or more concepts so you can review quickly and run hands-on examples without losing time during the session.
+
+Project Structure
+-----------------
+
+```
+.
+├── app/                 # FastAPI source code used to practice API design
+│   ├── api/             # Routers keep endpoints organized by responsibility
+│   │   └── routes.py    # Endpoints with JSON requests, responses, and errors
+│   ├── __init__.py      # Marks the folder as a Python package
+│   └── main.py          # FastAPI application object and root routes
+├── practice/            # Standalone Python exercises for fundamentals
+│   └── basics.py        # Lists, dicts, sets, strings, loops, errors
+├── Dockerfile           # Container recipe to ship the FastAPI app
+├── requirements.txt     # Minimal dependencies (FastAPI + Uvicorn)
+└── README.ME            # You are here
+```
+
+How to Use This Template
+------------------------
+
+- Create a virtual environment: `python -m venv .venv && source .venv/bin/activate`
+- Install dependencies: `pip install -r requirements.txt`
+- Run the API locally: `uvicorn app.main:app --reload`
+- Open http://127.0.0.1:8000/docs to test the endpoints with Swagger UI.
+- Execute the fundamentals script: `python practice/basics.py`
+- Build the container image: `docker build -t interview-practice .`
+- Run the container: `docker run -p 8000:8000 interview-practice`
+
+Topic Checklist
+---------------
+
+### 1. Fundamentos de Programación
+
+- Revisa `practice/basics.py` para ver ejemplos con listas, diccionarios y conjuntos.
+- Observa el uso de funciones, condicionales y ciclos (`count_even_numbers`).
+- Practica manejo de strings con `format_candidate_summary`.
+- El bloque `if __name__ == "__main__"` permite ejecutar pequeñas pruebas manuales.
+- Sigue nombres descriptivos en inglés (`DEFAULT_USERNAMES`, `safe_divide`).
+
+### 2. Desarrollo con Python y FastAPI
+
+- `app/main.py` crea la aplicación FastAPI y un endpoint de health check.
+- `app/api/routes.py` muestra cómo recibir JSON, devolver modelos y manejar errores.
+- Usa `Idea` (modelo Pydantic) para validar datos de entrada y salida.
+- Ejecuta `uvicorn app.main:app --reload` para ver los cambios en vivo.
+
+### 3. Control de Versiones con Git
+
+- Inicializa un repositorio: `git init`
+- Registra cambios: `git add .` seguido de `git commit -m "feat: inicializa plantilla"`
+- Publica en GitHub: crea un remoto (`git remote add origin <url>`) y empuja (`git push`).
+- Clona desde cero: `git clone <url>`
+- Practica ramas: `git checkout -b feature/practice` y luego `git merge feature/practice`
+
+### 4. Docker
+
+- El `Dockerfile` está lleno de comentarios para recordar cada paso.
+- Construye la imagen con `docker build -t interview-practice .`
+- Lista imágenes: `docker images`
+- Corre el contenedor en modo interactivo: `docker run -p 8000:8000 interview-practice`
+- Verifica procesos: `docker ps`
+
+### 5. Trabajo en Equipo y Habilidades Colaborativas
+
+- Usa este proyecto como base para ensayar roles (líder, técnico, presentador).
+- Practica explicar tu código y escuchar sugerencias antes de implementarlas.
+- Documenta acuerdos en un archivo Markdown si lo discute el equipo.
+
+### 6. Presentación de Ideas en Inglés
+
+- Practica explicar cada carpeta en inglés usando el glosario: API, endpoint, request, response, container, teamwork.
+- Ensaya una mini demo: describe el flujo `POST /api/ideas -> GET /api/ideas` y por qué es útil.
+
+### 7. Preparación Individual
+
+- Verifica tu cuenta de GitHub y añade un enlace a tu perfil en la entrevista.
+- Asegúrate de tener instalados Python, FastAPI (`pip install fastapi`), Docker y Git.
+- Vuelve a correr los comandos del apartado "How to Use" antes de la entrevista.
+- Lleva VS Code o tu editor favorito listo con extensiones básicas (Python, Docker).
+
+Siguientes Pasos Recomendados
+-----------------------------
+
+- Añade tus propias notas en `practice/` para temas que quieras reforzar.
+- Extiende el API con nuevos endpoints para practicar validación adicional.
+- Documenta tu flujo de trabajo escribiendo un blog corto o un README extra.
+
+Users API (nuevo)
+-----------------
+
+- `GET /api/users`: lista usuarios en memoria.
+- `POST /api/users`: crea usuario con cuerpo `{ "name": str, "email": EmailStr }` y valida email único.
+- `GET /api/users/{user_id}`: obtiene usuario por id.
+- `DELETE /api/users/{user_id}`: elimina usuario; devuelve 204.
+
+Prueba rápida con curl (terminal):
+
+```
+curl -X POST http://localhost:8000/api/users \
+	-H 'Content-Type: application/json' \
+	-d '{"name":"Ada Lovelace","email":"ada@example.com"}'
+
+curl http://localhost:8000/api/users
+```
+
+Guía para principiantes: ¿Qué es GET, POST y DELETE?
+----------------------------------------------------
+
+- GET: "traer información". No envías cuerpo; recibes datos. Ej.: listar usuarios.
+- POST: "crear algo nuevo". Envías datos en formato JSON en el cuerpo.
+- DELETE: "borrar algo". No suele llevar cuerpo; se indica qué borrar con el id en la URL.
+
+Cómo probar paso a paso
+-----------------------
+
+1) Ver que el servidor responde:
+
+```
+curl http://localhost:8000/health
+```
+
+2) Ver lista vacía de usuarios:
+
+```
+curl http://localhost:8000/api/users
+```
+
+3) Crear un usuario (POST):
+
+```
+curl -X POST http://localhost:8000/api/users \
+	-H 'Content-Type: application/json' \
+	-d '{"name":"Ana","email":"ana@test.com"}'
+```
+
+4) Listar de nuevo (deberías ver a Ana con un `id`):
+
+```
+curl http://localhost:8000/api/users
+```
+
+5) Borrar al usuario con id 1 (DELETE):
+
+```
+curl -X DELETE http://localhost:8000/api/users/1 -i
+```
+
+Si ves `HTTP/1.1 204 No Content`, se borró correctamente.
